@@ -6,20 +6,12 @@ provider "aws" {
   alias = "hub"
 }
 
-resource "null_resource" "delay" {
-  provisioner "local-exec" {
-    command = "sleep 30"
-  }
-}
-
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   provider           = aws.satellite
   count              = local.create ? 1 : 0
   subnet_ids         = data.aws_subnet_ids.this[0].ids
   transit_gateway_id = var.transit_gateway_id
   vpc_id             = data.aws_vpc.this[0].id
-  depends_on         = [null_resource.delay]
-
 }
 
 resource "aws_ec2_transit_gateway_route" "this" {
