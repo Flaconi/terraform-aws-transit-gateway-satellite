@@ -13,10 +13,26 @@ configuration on the hub side (mainly routing).
 This module assumes that its pair module was used:
 [terraform-aws-transit-gateway-hub][2] to handle the actual TGW.
 
-Check out the examples in the aforementioned module.
+Check out the [examples][3] in the aforementioned module.
 
-At the moment, this module only supports VPC attachments to the TGW.
+## Supported resources
+
+At the moment, this module only supports attaching _VPCs_ to the TGW.
 Support for VPN tunnels will be added soon.
+
+## Assumptions
+
+### Credentials
+
+The module starts from the assumption that the `aws_login_profile` allows the
+user to assume the necessary IAM roles, as required, to make the necessary
+changes (and in the case of the `satellite` module, cross-account).
+
+For example, this can be the so-called `login` profile, as documented
+[here][4], which allows us to assume the corresponding IAM role(s) in various
+AWS accounts.
+
+You can read more about how Terraform handles this [here][4].
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
@@ -51,3 +67,5 @@ Support for VPN tunnels will be added soon.
 
 [1]: https://en.wikipedia.org/wiki/Star_network
 [2]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub
+[3]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub/tree/WIP/examples
+[4]: https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
