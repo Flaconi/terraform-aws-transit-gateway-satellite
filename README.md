@@ -32,7 +32,7 @@ For example, this can be the so-called `login` profile, as documented
 [here][4], which allows us to assume the corresponding IAM role(s) in various
 AWS accounts.
 
-You can read more about how Terraform handles this [here][4].
+You can read more about how Terraform handles this [here][5].
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
@@ -68,4 +68,5 @@ You can read more about how Terraform handles this [here][4].
 [1]: https://en.wikipedia.org/wiki/Star_network
 [2]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub
 [3]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub/tree/WIP/examples
-[4]: https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
+[4]: https://github.com/Flaconi/devops-docs/blob/master/doc/howto/aws-azure-login.md
+[5]: https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
