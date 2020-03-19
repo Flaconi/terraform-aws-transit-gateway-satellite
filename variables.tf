@@ -52,3 +52,8 @@ variable "transit_gateway_id" {
   type        = string
   default     = ""
 }
+
+variable "ram_resource_association_id" {
+  description = "Identifier of the Resource Access Manager Resource Association"
+  type        = string
+}

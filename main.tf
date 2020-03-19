@@ -7,6 +7,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   subnet_ids         = data.aws_subnet_ids.this[0].ids
   transit_gateway_id = var.transit_gateway_id
   vpc_id             = data.aws_vpc.this[0].id
+
+  # When we create the TGW and the association through RAM in one run, we need
+  # this to escape the race condition.
+  depends_on = [var.ram_resource_association_id]
 }
 
 resource "aws_ec2_transit_gateway_route" "this" {
