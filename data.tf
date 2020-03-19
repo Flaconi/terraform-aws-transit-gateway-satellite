@@ -12,7 +12,7 @@ data "aws_subnet_ids" "this" {
   count    = local.create ? 1 : 0
   vpc_id   = data.aws_vpc.this[0].id
   tags = {
-    Name = "*private*"
+    Name = "*${var.subnet_name_keyword_selector}*"
   }
 }
 

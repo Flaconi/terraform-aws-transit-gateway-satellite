@@ -54,11 +54,13 @@ their IDs and those of their associated routing tables.
 |------|-------------|------|---------|:-----:|
 | aws\_account\_id\_hub | AWS account number containing the TGW hub | `string` | n/a | yes |
 | aws\_login\_profile | Name of the AWS login profile as seen under ~/.aws/config used for assuming cross-account roles | `any` | n/a | yes |
+| ram\_resource\_association\_id | Identifier of the Resource Access Manager Resource Association | `string` | n/a | yes |
 | role\_to\_assume\_hub | IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ENG-OPS) | `string` | n/a | yes |
 | aws\_account\_id\_satellite | AWS account number containing the TGW satellite | `string` | `""` | no |
 | destination\_cidr\_block | CIDR to be routed | `string` | `""` | no |
 | role\_to\_assume\_satellite | IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ENG-OPS) | `string` | `""` | no |
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
+| subnet\_name\_keyword\_selector | Keyword matching the name of the subnet(s) for which the routing will be added (i.e. private) | `string` | `"private"` | no |
 | transit\_gateway\_id | Identifier of the Transit Gateway | `string` | `""` | no |
 | transit\_gateway\_route\_table\_id | Identifier of the Transit Gateway Route Table | `string` | `""` | no |
 | vpc\_name\_to\_attach | Name of the satellite VPC to be attached to the TGW | `string` | `""` | no |
@@ -76,3 +78,7 @@ their IDs and those of their associated routing tables.
 [3]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub/tree/WIP/examples
 [4]: https://github.com/Flaconi/devops-docs/blob/master/doc/howto/aws-azure-login.md
 [5]: https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
+
+## To do
+
+- Add support for passing the IDs of the subnets as an input variable

@@ -57,3 +57,9 @@ variable "ram_resource_association_id" {
   description = "Identifier of the Resource Access Manager Resource Association"
   type        = string
 }
+
+variable "subnet_name_keyword_selector" {
+  description = "Keyword matching the name of the subnet(s) for which the routing will be added (i.e. private)"
+  type        = string
+  default     = "private"
+}
