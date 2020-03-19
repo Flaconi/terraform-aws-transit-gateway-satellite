@@ -1,10 +1,5 @@
-provider "aws" {
-  alias = "satellite"
-}
-
-provider "aws" {
-  alias = "hub"
-}
+provider "aws" { alias = "satellite" }
+provider "aws" { alias = "hub" }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   provider           = aws.satellite
