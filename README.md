@@ -34,6 +34,12 @@ AWS accounts.
 
 You can read more about how Terraform handles this [here][5].
 
+### Routing
+
+For creating the network routes on the satellite side, the module expects to
+find the keyword "_private_" in the name of the subnets, so that it may collect
+their IDs and those of their associated routing tables. 
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
 
