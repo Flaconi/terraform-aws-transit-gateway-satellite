@@ -40,4 +40,4 @@ jobs:
 
       - name: "make test"
         run: |
-          make test ARGS="-var assumer_account_role_name=test -var assumer_account_id=1234567890"
+          make test ARGS="-var assumer_account_role_name=test"
