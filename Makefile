@@ -192,7 +192,7 @@ _lint-fmt: _pull-tf
 	@echo "------------------------------------------------------------"
 	@echo "# *.tf files"
 	@echo "------------------------------------------------------------"
-	@if docker run -it --rm -v "$(CURRENT_DIR):/t:ro" --workdir "/t" hashicorp/terraform:$(TF_VERSION) \
+	@if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t:ro" --workdir "/t" hashicorp/terraform:$(TF_VERSION) \
 		fmt -check=true -diff=true -write=false -list=true .; then \
 		echo "OK"; \
 	else \
