@@ -39,7 +39,7 @@ Obviously, all the [supported authentication][6] methods can also be used.
 
 For creating the network routes on the satellite side, the module expects to
 find the keyword "_private_" in the name of the subnets, so that it may collect
-their IDs and those of their associated routing tables. 
+their IDs and those of their associated routing tables.
 Check the `subnet_name_keyword_selector` variable if you want to change this.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
