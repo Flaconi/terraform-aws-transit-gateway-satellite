@@ -25,13 +25,13 @@ variable "aws_login_profile" {
 }
 
 variable "role_to_assume_satellite" {
-  description = "IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ENG-OPS)"
+  description = "IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ROLE-SATELLITE)"
   type        = string
   default     = ""
 }
 
 variable "role_to_assume_hub" {
-  description = "IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ENG-OPS)"
+  description = "IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ROLE-HUB)"
   type        = string
 }
 
