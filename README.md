@@ -56,13 +56,14 @@ Check the `subnet_name_keyword_selector` variable if you want to change this.
 |------|-------------|------|---------|:-----:|
 | aws\_account\_id\_hub | AWS account number containing the TGW hub | `string` | n/a | yes |
 | aws\_login\_profile | Name of the AWS login profile as seen under ~/.aws/config used for assuming cross-account roles | `any` | n/a | yes |
-| ram\_resource\_association\_id | Identifier of the Resource Access Manager Resource Association | `string` | n/a | yes |
 | role\_to\_assume\_hub | IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ROLE-HUB) | `string` | n/a | yes |
 | aws\_account\_id\_satellite | AWS account number containing the TGW satellite | `string` | `""` | no |
 | destination\_cidr\_block | CIDR to be routed | `string` | `""` | no |
+| ram\_resource\_association\_id | Identifier of the Resource Access Manager Resource Association | `string` | `""` | no |
 | role\_to\_assume\_satellite | IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ROLE-SATELLITE) | `string` | `""` | no |
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
 | subnet\_name\_keyword\_selector | Keyword matching the name of the subnet(s) for which the routing will be added (i.e. private) | `string` | `"private"` | no |
+| transit\_gateway\_hub\_name | Name of the Transit Gateway to attach to | `string` | `""` | no |
 | transit\_gateway\_id | Identifier of the Transit Gateway | `string` | `""` | no |
 | transit\_gateway\_route\_table\_id | Identifier of the Transit Gateway Route Table | `string` | `""` | no |
 | vpc\_name\_to\_attach | Name of the satellite VPC to be attached to the TGW | `string` | `""` | no |
@@ -75,14 +76,17 @@ Check the `subnet_name_keyword_selector` variable if you want to change this.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
+## To do
+
+- Collect TGW ID directly rather than using a RAM data source
+  ([currently not supported][7])
+- Add support for VPN attachments
+- Add support for passing IDs of subnets while fetching routing table IDs
+
 [1]: https://en.wikipedia.org/wiki/Star_network
 [2]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub
 [3]: https://github.com/Flaconi/terraform-aws-transit-gateway-hub/tree/master/examples
 [4]: https://docs.aws.amazon.com/cli/latest/reference/sts/assume-role.html#examples
 [5]: https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
 [6]: https://www.terraform.io/docs/providers/aws/index.html#authentication
-
-## To do
-
-- Add support for passing the IDs of the subnets as an input variable
-- Add support for VPN attachments
+[7]: https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-transit-gateways.html#options
