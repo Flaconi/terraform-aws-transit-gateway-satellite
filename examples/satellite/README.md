@@ -18,6 +18,7 @@ No provider.
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
 | subnet\_name\_keyword\_selector | Keyword matching the name of the subnet(s) for which the routing will be added (i.e. private) | `string` | `"private"` | no |
 | transit\_gateway\_hub\_name | Name of the Transit Gateway to attach to | `string` | `""` | no |
+| transit\_gateway\_id | Identifier of the Transit Gateway | `string` | `""` | no |
 | vpc\_name\_to\_attach | Name of the satellite VPC to be attached to the TGW | `string` | `""` | no |
 
 ## Outputs

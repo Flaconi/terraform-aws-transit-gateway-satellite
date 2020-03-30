@@ -50,3 +50,9 @@ variable "transit_gateway_hub_name" {
   type        = string
   default     = ""
 }
+
+variable "transit_gateway_id" {
+  description = "Identifier of the Transit Gateway"
+  type        = string
+  default     = ""
+}
