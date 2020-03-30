@@ -1,7 +1,7 @@
 # The Transit Gateway (hub) has already been created in AWS, as a fixture for
 # this test case due to not being able to use 'depends_on' on Terraform modules
 module "tgw-satellite" {
-  source = "../../../terraform-aws-transit-gateway-satellite/"
+  source = "../../"
 
   providers = {
     aws.satellite = aws.satellite
