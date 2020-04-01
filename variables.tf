@@ -56,10 +56,17 @@ variable "transit_gateway_id" {
 variable "ram_resource_association_id" {
   description = "Identifier of the Resource Access Manager Resource Association"
   type        = string
+  default     = ""
 }
 
 variable "subnet_name_keyword_selector" {
   description = "Keyword matching the name of the subnet(s) for which the routing will be added (i.e. private)"
   type        = string
   default     = "private"
+}
+
+variable "transit_gateway_hub_name" {
+  description = "Name of the Transit Gateway to attach to"
+  type        = string
+  default     = ""
 }

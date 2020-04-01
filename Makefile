@@ -77,7 +77,7 @@ test: _pull-tf
 		echo "------------------------------------------------------------"; \
 		echo "# Terraform init"; \
 		echo "------------------------------------------------------------"; \
-		if docker run -it --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
 			init \
 				-verify-plugins=true \
 				-lock=false \
@@ -90,25 +90,72 @@ test: _pull-tf
 			echo "OK"; \
 		else \
 			echo "Failed"; \
-			docker run -it --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
+			docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
 			exit 1; \
 		fi; \
 		echo; \
 		echo "------------------------------------------------------------"; \
 		echo "# Terraform validate"; \
 		echo "------------------------------------------------------------"; \
-		if docker run -it --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
 			validate \
-				$(ARGS) \
 				.; then \
 			echo "OK"; \
-			docker run -it --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
 		else \
 			echo "Failed"; \
-			docker run -it --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
+			docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
 			exit 1; \
 		fi; \
 		echo; \
+		echo "------------------------------------------------------------"; \
+		echo "# Terraform plan"; \
+		echo "------------------------------------------------------------"; \
+		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+			plan \
+				$(ARGS) \
+				-out=tfplan \
+				; then \
+			echo "OK"; \
+		else \
+			echo "Failed"; \
+			docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
+			exit 1; \
+		fi; \
+		echo; \
+		echo "------------------------------------------------------------"; \
+		echo "# Terraform apply & destroy"; \
+		echo "------------------------------------------------------------"; \
+		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+			apply \
+				-auto-approve \
+				tfplan \
+				; then \
+			echo "Apply OK"; \
+			if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+				destroy \
+					-auto-approve \
+					$(ARGS) \
+					; then \
+				echo "Destroy OK"; \
+				docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ terraform.tfstate terraform.tfstate.backup || true; \
+			else \
+				echo "Destroy failed. You should check for dangling resources."; \
+				exit 1; \
+			fi; \
+		else \
+			echo "Apply failed"; \
+			if docker run -$$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+				destroy \
+					-auto-approve \
+					$(ARGS) \
+					; then \
+				echo "Destroy OK"; \
+				docker run -$$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ terraform.tfstate terraform.tfstate.backup || true; \
+			else \
+				echo "Destroy failed. You should check for dangling resources."; \
+				exit 1; \
+			fi; \
+		fi; \
 	)
 
 
