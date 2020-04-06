@@ -15,8 +15,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
 
 resource "aws_ec2_transit_gateway_route" "this" {
   provider                       = aws.hub
-  count                          = local.create ? 1 : 0
-  destination_cidr_block         = var.destination_cidr_block
+  count                          = local.create ? length(var.hub_destination_cidr_blocks) : 0
+  destination_cidr_block         = element(var.hub_destination_cidr_blocks, count.index)
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this[0].id
   transit_gateway_route_table_id = local.transit_gateway_route_table_id
   depends_on                     = [aws_ec2_transit_gateway_vpc_attachment.this]
@@ -39,12 +39,15 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 }
 
 resource "aws_route" "this" {
-  provider = aws.satellite
-  count    = local.create ? length(data.aws_route_table.this[*].subnet_id) : 0
+  for_each = {
+    for route in local.routes_in_tables : "${route.table_id}.${route.dest_cidr_block}" => route...
+  }
 
-  destination_cidr_block = var.destination_cidr_block
+  provider = aws.satellite
+
+  destination_cidr_block = each.value[0].dest_cidr_block
   transit_gateway_id     = local.transit_gateway_id
-  route_table_id         = sort(data.aws_route_table.this[*].route_table_id)[count.index]
+  route_table_id         = each.value[1].table_id
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.this]
 }
