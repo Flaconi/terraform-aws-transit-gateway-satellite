@@ -34,9 +34,16 @@ variable "vpc_name_to_attach" {
   default     = ""
 }
 
-variable "destination_cidr_block" {
-  description = "CIDR to be routed"
-  default     = ""
+variable "satellite_destination_cidr_blocks" {
+  description = "List of CIDRs to be routed for the satellite"
+  type        = list
+  default     = []
+}
+
+variable "hub_destination_cidr_blocks" {
+  description = "List of CIDRs to be routed for the hub"
+  type        = list
+  default     = []
 }
 
 variable "subnet_name_keyword_selector" {

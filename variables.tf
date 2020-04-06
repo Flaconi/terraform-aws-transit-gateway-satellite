@@ -4,9 +4,16 @@ variable "satellite_create" {
   type        = bool
 }
 
-variable "destination_cidr_block" {
-  description = "CIDR to be routed"
-  default     = ""
+variable "satellite_destination_cidr_blocks" {
+  description = "List of CIDRs to be routed for the satellite"
+  type        = list
+  default     = []
+}
+
+variable "hub_destination_cidr_blocks" {
+  description = "List of CIDRs to be routed for the hub"
+  type        = list
+  default     = []
 }
 
 variable "aws_account_id_satellite" {

@@ -18,7 +18,9 @@ module "tgw-satellite" {
   role_to_assume_satellite = var.role_to_assume_satellite
 
   vpc_name_to_attach     = var.vpc_name_to_attach
-  destination_cidr_block = var.destination_cidr_block
+
+  satellite_destination_cidr_blocks = var.satellite_destination_cidr_blocks
+  hub_destination_cidr_blocks       = var.hub_destination_cidr_blocks
 
   subnet_name_keyword_selector = var.subnet_name_keyword_selector
 
