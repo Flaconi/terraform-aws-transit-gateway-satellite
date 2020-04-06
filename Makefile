@@ -144,13 +144,13 @@ test: _pull-tf
 			fi; \
 		else \
 			echo "Apply failed"; \
-			if docker run -$$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+			if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
 				destroy \
 					-auto-approve \
 					$(ARGS) \
 					; then \
 				echo "Destroy OK"; \
-				docker run -$$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ terraform.tfstate terraform.tfstate.backup || true; \
+				docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ terraform.tfstate terraform.tfstate.backup || true; \
 			else \
 				echo "Destroy failed. You should check for dangling resources."; \
 				exit 1; \
