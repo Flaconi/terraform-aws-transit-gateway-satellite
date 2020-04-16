@@ -47,7 +47,7 @@ resource "aws_route" "this" {
 
   destination_cidr_block = each.value[0].dest_cidr_block
   transit_gateway_id     = local.transit_gateway_id
-  route_table_id         = each.value[1].table_id
+  route_table_id         = each.value[0].table_id
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.this]
 }
