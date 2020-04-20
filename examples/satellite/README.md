@@ -17,7 +17,7 @@ No provider.
 | hub\_destination\_cidr\_blocks | List of CIDRs to be routed for the hub | `list` | `[]` | no |
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
 | satellite\_destination\_cidr\_blocks | List of CIDRs to be routed for the satellite | `list` | `[]` | no |
-| subnet\_name\_keyword\_selector | Keyword matching the name of the subnet(s) for which the routing will be added (i.e. private) | `string` | `"private"` | no |
+| subnet\_filters | List of maps selecting the subnet(s) for which the routing will be added | <pre>list(object({<br>    name   = string<br>    values = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "name": "tag:Name",<br>    "values": [<br>      "private"<br>    ]<br>  }<br>]<br></pre> | no |
 | transit\_gateway\_hub\_name | Name of the Transit Gateway to attach to | `string` | `""` | no |
 | transit\_gateway\_id | Identifier of the Transit Gateway | `string` | `""` | no |
 | vpc\_name\_to\_attach | Name of the satellite VPC to be attached to the TGW | `string` | `""` | no |
