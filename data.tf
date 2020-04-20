@@ -11,8 +11,13 @@ data "aws_subnet_ids" "this" {
   provider = aws.satellite
   count    = local.create ? 1 : 0
   vpc_id   = data.aws_vpc.this[0].id
-  tags = {
-    Name = "*${var.subnet_name_keyword_selector}*"
+
+  dynamic "filter" {
+    for_each = var.subnet_filters
+    content {
+      name   = filter.value["name"]
+      values = filter.value["values"]
+    }
   }
 }
 

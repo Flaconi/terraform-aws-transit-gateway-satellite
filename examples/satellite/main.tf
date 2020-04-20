@@ -22,7 +22,7 @@ module "tgw-satellite" {
   satellite_destination_cidr_blocks = var.satellite_destination_cidr_blocks
   hub_destination_cidr_blocks       = var.hub_destination_cidr_blocks
 
-  subnet_name_keyword_selector = var.subnet_name_keyword_selector
+  subnet_filters = var.subnet_filters
 
   transit_gateway_hub_name = var.transit_gateway_hub_name
 }
