@@ -22,3 +22,5 @@ subnet_filters = [
 ]
 
 transit_gateway_hub_name = "test-tgw-fixture"
+
+route_entire_satellite_vpc = true

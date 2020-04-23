@@ -28,6 +28,12 @@ data "aws_route_table" "this" {
   subnet_id = sort(data.aws_subnet_ids.this[0].ids)[count.index]
 }
 
+data "aws_route_tables" "all" {
+  provider = aws.satellite
+  count    = local.create && var.route_entire_satellite_vpc ? 1 : 0
+  vpc_id   = data.aws_vpc.this[0].id
+}
+
 data "aws_ec2_transit_gateway" "this" {
   provider = aws.hub
   count    = local.create && var.transit_gateway_hub_name != "" ? 1 : 0

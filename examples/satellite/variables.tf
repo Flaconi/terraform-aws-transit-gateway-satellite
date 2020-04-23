@@ -71,3 +71,9 @@ variable "transit_gateway_id" {
   type        = string
   default     = ""
 }
+
+variable "route_entire_satellite_vpc" {
+  description = "Boolean flag for toggling the creation of network routes for all the subnets of the satellite VPC"
+  type        = bool
+  default     = false
+}
