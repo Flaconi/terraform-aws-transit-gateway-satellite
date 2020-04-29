@@ -65,6 +65,8 @@ Check the `subnet_name_keyword_selector` variable if you want to change this.
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
 | satellite\_destination\_cidr\_blocks | List of CIDRs to be routed for the satellite | `list` | `[]` | no |
 | subnet\_filters | List of maps selecting the subnet(s) for which the routing will be added | <pre>list(object({<br>    name   = string<br>    values = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "name": "tag:Name",<br>    "values": [<br>      "private"<br>    ]<br>  }<br>]<br></pre> | no |
+| transit\_gateway\_default\_route\_table\_association | Set this to false when the hub account also becomes a satellite. Check the official docs for more info. | `bool` | `true` | no |
+| transit\_gateway\_default\_route\_table\_propagation | Set this to false when the hub account also becomes a satellite. Check the official docs for more info. | `bool` | `true` | no |
 | transit\_gateway\_hub\_name | Name of the Transit Gateway to attach to | `string` | `""` | no |
 | transit\_gateway\_id | Identifier of the Transit Gateway | `string` | `""` | no |
 | transit\_gateway\_route\_table\_id | Identifier of the Transit Gateway Route Table | `string` | `""` | no |

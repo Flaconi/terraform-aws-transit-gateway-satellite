@@ -91,3 +91,15 @@ variable "route_entire_satellite_vpc" {
   type        = bool
   default     = false
 }
+
+variable "transit_gateway_default_route_table_association" {
+  description = "Set this to false when the hub account also becomes a satellite. Check the official docs for more info."
+  type        = bool
+  default     = true
+}
+
+variable "transit_gateway_default_route_table_propagation" {
+  description = "Set this to false when the hub account also becomes a satellite. Check the official docs for more info."
+  type        = bool
+  default     = true
+}
