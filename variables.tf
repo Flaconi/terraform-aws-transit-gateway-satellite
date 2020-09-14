@@ -6,13 +6,13 @@ variable "satellite_create" {
 
 variable "satellite_destination_cidr_blocks" {
   description = "List of CIDRs to be routed for the satellite"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "hub_destination_cidr_blocks" {
   description = "List of CIDRs to be routed for the hub"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
