@@ -13,7 +13,7 @@ data "aws_subnet_ids" "this" {
   vpc_id   = data.aws_vpc.this[0].id
 
   dynamic "filter" {
-    for_each = var.subnet_filters
+    for_each = var.attachment_subnet_filters
     content {
       name   = filter.value["name"]
       values = filter.value["values"]

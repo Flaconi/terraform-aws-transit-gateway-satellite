@@ -46,8 +46,8 @@ variable "hub_destination_cidr_blocks" {
   default     = []
 }
 
-variable "subnet_filters" {
-  description = "List of maps selecting the subnet(s) for which the routing will be added"
+variable "attachment_subnet_filters" {
+  description = "List of maps selecting the subnet(s) where TGW will be attached"
   type = list(object({
     name   = string
     values = list(string)

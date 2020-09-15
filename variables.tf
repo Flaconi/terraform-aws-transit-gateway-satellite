@@ -66,8 +66,22 @@ variable "ram_resource_association_id" {
   default     = ""
 }
 
-variable "subnet_filters" {
-  description = "List of maps selecting the subnet(s) for which the routing will be added"
+variable "attachment_subnet_filters" {
+  description = "List of maps selecting the subnet(s) where TGW will be attached"
+  type = list(object({
+    name   = string
+    values = list(string)
+  }))
+  default = [
+    {
+      name   = "tag:Name"
+      values = ["private"]
+    }
+  ]
+}
+
+variable "private_subnet_filters" {
+  description = "List of maps selecting the subnet(s) which are private"
   type = list(object({
     name   = string
     values = list(string)
