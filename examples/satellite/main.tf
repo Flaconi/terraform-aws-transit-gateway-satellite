@@ -27,4 +27,8 @@ module "tgw-satellite" {
   transit_gateway_hub_name = var.transit_gateway_hub_name
 
   route_entire_satellite_vpc = var.route_entire_satellite_vpc
+
+  route_private_subnets_via_tgw = var.route_private_subnets_via_tgw
+
+  private_subnet_filters = var.private_subnet_filters
 }

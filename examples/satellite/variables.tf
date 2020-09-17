@@ -60,6 +60,26 @@ variable "attachment_subnet_filters" {
   ]
 }
 
+variable route_private_subnets_via_tgw {
+  description = "Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored."
+  type        = bool
+  default     = false
+}
+
+variable "private_subnet_filters" {
+  description = "List of maps selecting the subnet(s) which are private"
+  type = list(object({
+    name   = string
+    values = list(string)
+  }))
+  default = [
+    {
+      name   = "tag:Name"
+      values = ["private"]
+    }
+  ]
+}
+
 variable "transit_gateway_hub_name" {
   description = "Name of the Transit Gateway to attach to"
   type        = string
