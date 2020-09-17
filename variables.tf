@@ -75,12 +75,12 @@ variable "attachment_subnet_filters" {
   default = [
     {
       name   = "tag:Name"
-      values = ["private"]
+      values = ["*private*"]
     }
   ]
 }
 
-variable route_private_subnets_via_tgw {
+variable "route_private_subnets_via_tgw" {
   description = "Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored."
   type        = bool
   default     = false
@@ -95,7 +95,7 @@ variable "private_subnet_filters" {
   default = [
     {
       name   = "tag:Name"
-      values = ["private"]
+      values = ["*private*"]
     }
   ]
 }

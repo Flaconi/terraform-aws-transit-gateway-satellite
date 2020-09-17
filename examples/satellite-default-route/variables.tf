@@ -60,7 +60,7 @@ variable "attachment_subnet_filters" {
   ]
 }
 
-variable route_private_subnets_via_tgw {
+variable "route_private_subnets_via_tgw" {
   description = "Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored."
   type        = bool
   default     = false
