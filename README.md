@@ -64,6 +64,7 @@ Check the `subnet_name_keyword_selector` variable if you want to change this.
 | ram\_resource\_association\_id | Identifier of the Resource Access Manager Resource Association | `string` | `""` | no |
 | role\_to\_assume\_satellite | IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ROLE-SATELLITE) | `string` | `""` | no |
 | route\_entire\_satellite\_vpc | Boolean flag for toggling the creation of network routes for all the subnets of the satellite VPC | `bool` | `false` | no |
+| route\_private\_subnets\_via\_tgw | Use TGW attachment as a default route for private subnets | `bool` | `false` | no |
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
 | satellite\_destination\_cidr\_blocks | List of CIDRs to be routed for the satellite | `list(string)` | `[]` | no |
 | transit\_gateway\_default\_route\_table\_association | Set this to false when the hub account also becomes a satellite. Check the official docs for more info. | `bool` | `true` | no |

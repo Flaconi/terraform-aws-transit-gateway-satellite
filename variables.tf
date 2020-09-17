@@ -80,6 +80,12 @@ variable "attachment_subnet_filters" {
   ]
 }
 
+variable route_private_subnets_via_tgw {
+  description = "Use TGW attachment as a default route for private subnets"
+  type        = bool
+  default     = false
+}
+
 variable "private_subnet_filters" {
   description = "List of maps selecting the subnet(s) which are private"
   type = list(object({
