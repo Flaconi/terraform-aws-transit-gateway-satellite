@@ -6,13 +6,13 @@ variable "satellite_create" {
 
 variable "satellite_destination_cidr_blocks" {
   description = "List of CIDRs to be routed for the satellite"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "hub_destination_cidr_blocks" {
   description = "List of CIDRs to be routed for the hub"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -66,8 +66,8 @@ variable "ram_resource_association_id" {
   default     = ""
 }
 
-variable "subnet_filters" {
-  description = "List of maps selecting the subnet(s) for which the routing will be added"
+variable "attachment_subnet_filters" {
+  description = "List of maps selecting the subnet(s) where TGW will be attached"
   type = list(object({
     name   = string
     values = list(string)
@@ -75,7 +75,27 @@ variable "subnet_filters" {
   default = [
     {
       name   = "tag:Name"
-      values = ["private"]
+      values = ["*private*"]
+    }
+  ]
+}
+
+variable "route_private_subnets_via_tgw" {
+  description = "Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored."
+  type        = bool
+  default     = false
+}
+
+variable "private_subnet_filters" {
+  description = "List of maps selecting the subnet(s) which are private"
+  type = list(object({
+    name   = string
+    values = list(string)
+  }))
+  default = [
+    {
+      name   = "tag:Name"
+      values = ["*private*"]
     }
   ]
 }

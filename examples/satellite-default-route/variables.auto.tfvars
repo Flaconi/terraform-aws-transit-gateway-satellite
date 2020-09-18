@@ -23,6 +23,8 @@ attachment_subnet_filters = [
 
 transit_gateway_hub_name = "test-tgw-fixture"
 
+route_private_subnets_via_tgw = true
+
 private_subnet_filters = [
   {
     name   = "tag:Name"

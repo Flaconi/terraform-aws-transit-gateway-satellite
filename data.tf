@@ -13,7 +13,21 @@ data "aws_subnet_ids" "this" {
   vpc_id   = data.aws_vpc.this[0].id
 
   dynamic "filter" {
-    for_each = var.subnet_filters
+    for_each = var.attachment_subnet_filters
+    content {
+      name   = filter.value["name"]
+      values = filter.value["values"]
+    }
+  }
+}
+
+data "aws_subnet_ids" "private" {
+  provider = aws.satellite
+  count    = local.create ? 1 : 0
+  vpc_id   = data.aws_vpc.this[0].id
+
+  dynamic "filter" {
+    for_each = var.private_subnet_filters
     content {
       name   = filter.value["name"]
       values = filter.value["values"]
@@ -25,12 +39,12 @@ data "aws_route_table" "this" {
   provider = aws.satellite
   count    = local.create ? length(data.aws_subnet_ids.this[0].ids) : 0
 
-  subnet_id = sort(data.aws_subnet_ids.this[0].ids)[count.index]
+  subnet_id = sort(data.aws_subnet_ids.private[0].ids)[count.index]
 }
 
 data "aws_route_tables" "all" {
   provider = aws.satellite
-  count    = local.create && var.route_entire_satellite_vpc ? 1 : 0
+  count    = local.create ? 1 : 0
   vpc_id   = data.aws_vpc.this[0].id
 }
 
