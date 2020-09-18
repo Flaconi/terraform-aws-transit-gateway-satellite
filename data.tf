@@ -44,7 +44,7 @@ data "aws_route_table" "this" {
 
 data "aws_route_tables" "all" {
   provider = aws.satellite
-  count    = local.create && var.route_entire_satellite_vpc ? 1 : 0
+  count    = local.create ? 1 : 0
   vpc_id   = data.aws_vpc.this[0].id
 }
 
