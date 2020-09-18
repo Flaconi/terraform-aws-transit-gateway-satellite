@@ -15,7 +15,7 @@ variable "aws_account_id_hub" {
 
 variable "aws_account_id_satellite" {
   description = "List of AWS account numbers representing the satellites of the TGW"
-  type        = list
+  type        = list(string)
 }
 
 variable "role_to_assume_hub" {
@@ -36,13 +36,13 @@ variable "vpc_name_to_attach" {
 
 variable "satellite_destination_cidr_blocks" {
   description = "List of CIDRs to be routed for the satellite"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "hub_destination_cidr_blocks" {
   description = "List of CIDRs to be routed for the hub"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
