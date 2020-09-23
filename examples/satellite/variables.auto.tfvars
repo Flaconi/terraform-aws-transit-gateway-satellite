@@ -23,6 +23,8 @@ attachment_subnet_filters = [
 
 transit_gateway_hub_name = "test-tgw-fixture"
 
+private_subnets_strict_acl_rules = true
+
 private_subnet_filters = [
   {
     name   = "tag:Name"

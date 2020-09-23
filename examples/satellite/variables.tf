@@ -60,6 +60,12 @@ variable "attachment_subnet_filters" {
   ]
 }
 
+variable "private_subnets_strict_acl_rules" {
+  description = "Create additional ACLs for private subnets to restrict inbound traffic only to VPC itself and VPCs paired over TGW"
+  type        = bool
+  default     = false
+}
+
 variable "route_private_subnets_via_tgw" {
   description = "Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored."
   type        = bool

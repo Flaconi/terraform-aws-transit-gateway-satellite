@@ -54,3 +54,46 @@ resource "aws_route" "this" {
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.this]
 }
+
+resource "aws_network_acl" "private" {
+  provider   = aws.satellite
+  count      = local.create && var.private_subnets_strict_acl_rules ? 1 : 0
+  vpc_id     = data.aws_vpc.this[0].id
+  subnet_ids = data.aws_subnet_ids.private[0].ids
+}
+
+resource "aws_network_acl_rule" "private_default_egress" {
+  provider = aws.satellite
+  count    = local.create && var.private_subnets_strict_acl_rules ? 1 : 0
+
+  network_acl_id = aws_network_acl.private[0].id
+  rule_number    = 100
+  egress         = true
+  protocol       = "-1"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+}
+
+resource "aws_network_acl_rule" "private_default_ingress" {
+  provider = aws.satellite
+  count    = local.create && var.private_subnets_strict_acl_rules ? 1 : 0
+
+  network_acl_id = aws_network_acl.private[0].id
+  rule_number    = 100
+  egress         = false
+  protocol       = "-1"
+  rule_action    = "allow"
+  cidr_block     = data.aws_vpc.this[0].cidr_block
+}
+
+resource "aws_network_acl_rule" "private_ingress" {
+  provider = aws.satellite
+  for_each = local.create && var.private_subnets_strict_acl_rules ? toset(var.satellite_destination_cidr_blocks) : []
+
+  network_acl_id = aws_network_acl.private[0].id
+  rule_number    = 101 + index(var.satellite_destination_cidr_blocks, each.key)
+  egress         = false
+  protocol       = "-1"
+  rule_action    = "allow"
+  cidr_block     = each.key
+}

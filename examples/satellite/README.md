@@ -17,6 +17,7 @@ No provider.
 | attachment\_subnet\_filters | List of maps selecting the subnet(s) where TGW will be attached | <pre>list(object({<br>    name   = string<br>    values = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "name": "tag:Name",<br>    "values": [<br>      "*private*"<br>    ]<br>  }<br>]<br></pre> | no |
 | hub\_destination\_cidr\_blocks | List of CIDRs to be routed for the hub | `list(string)` | `[]` | no |
 | private\_subnet\_filters | List of maps selecting the subnet(s) which are private | <pre>list(object({<br>    name   = string<br>    values = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "name": "tag:Name",<br>    "values": [<br>      "*private*"<br>    ]<br>  }<br>]<br></pre> | no |
+| private\_subnets\_strict\_acl\_rules | Create additional ACLs for private subnets to restrict inbound traffic only to VPC itself and VPCs paired over TGW | `bool` | `false` | no |
 | route\_entire\_satellite\_vpc | Boolean flag for toggling the creation of network routes for all the subnets of the satellite VPC | `bool` | `false` | no |
 | route\_private\_subnets\_via\_tgw | Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored. | `bool` | `false` | no |
 | satellite\_create | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
