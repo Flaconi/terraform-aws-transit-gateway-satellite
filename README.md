@@ -42,6 +42,38 @@ find the keyword "_private_" in the name of the subnets, so that it may collect
 their IDs and those of their associated routing tables.
 Check the `subnet_name_keyword_selector` variable if you want to change this.
 
+When creating TGW attachments, AWS [supports adding only one subnet per AZ][8].
+For example, when a VPC has 6 subnets, with each AZ having a pair consisting of
+a public and a private subnet, it's recommended to only use the private subnets
+when creating the TGW attachment.
+For the described example, in the `eu-central-1` (Frankfurt) region, as
+currently there are 3 Availability Zones, the TGW attachment will contain 3
+(private) subnets.
+The resources placed within the remaining subnets (public and/or private), will
+also be able to route their traffic through the TGW.
+
+### ACLs
+
+__Caveat:__ Building on the [example](#routing) described above, when using
+Network ACLs (NACLs), the behaviour is different between subnets that are part
+of the TGW attachment and subnets that aren't.
+
+Specifically, because the ACL rules are stateless (as opposed to the Security
+Group rules, which are stateful), when trying to reach an external IP from a
+subnet that is also part of the TGW attachment, this *will work even without*
+an explicit ACL allow rule.
+
+However, for another subnet that's not part of the TGW attachment, although
+with a NACL allow rule for the targeted external CIDR in place, the traffic
+will not flow.
+
+This has to do with how NACL inbound rules are not being evaluated since the
+resource (i.e. EC2 instance) is in the same subnet with the TGW association.
+
+Unfortunately, AWS fails to provide explicit documentation for this behavior.
+It is implied on [this][9] documentation page and they've been made aware of
+this fact.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
 
@@ -96,3 +128,5 @@ Check the `subnet_name_keyword_selector` variable if you want to change this.
 [5]: https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly
 [6]: https://www.terraform.io/docs/providers/aws/index.html#authentication
 [7]: https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-transit-gateways.html#options
+[8]: https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html
+[9]: https://docs.aws.amazon.com/vpc/latest/tgw/tgw-nacls.html
