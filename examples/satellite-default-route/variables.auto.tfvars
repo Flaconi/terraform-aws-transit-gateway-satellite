@@ -13,11 +13,11 @@ hub_destination_cidr_blocks       = ["8.8.4.4/32", "8.8.8.8/32"]
 attachment_subnet_filters = [
   {
     name   = "tag:Name"
-    values = ["*private*"]
+    values = ["*public*"]
   },
   {
     name   = "availability-zone"
-    values = ["eu-central-1a", "eu-central-1b"]
+    values = ["eu-central-1c"]
   }
 ]
 

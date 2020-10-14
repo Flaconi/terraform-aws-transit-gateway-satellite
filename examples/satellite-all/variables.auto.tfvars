@@ -25,4 +25,13 @@ transit_gateway_hub_name = "test-tgw-fixture"
 
 route_entire_satellite_vpc = true
 
-private_subnet_filters = []
+private_subnet_filters = [
+  {
+    name   = "tag:Name"
+    values = ["*private*"]
+  },
+  {
+    name   = "availability-zone"
+    values = ["eu-central-1a", "eu-central-1b"]
+  }
+]
