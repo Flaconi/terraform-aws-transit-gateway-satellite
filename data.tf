@@ -37,7 +37,7 @@ data "aws_subnet_ids" "private" {
 
 data "aws_route_table" "this" {
   provider = aws.satellite
-  count    = local.create ? length(data.aws_subnet_ids.this[0].ids) : 0
+  count    = local.create ? length(data.aws_subnet_ids.private[0].ids) : 0
 
   subnet_id = sort(data.aws_subnet_ids.private[0].ids)[count.index]
 }
