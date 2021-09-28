@@ -11,8 +11,8 @@ TF_MODULES  = $(sort $(dir $(wildcard $(CURRENT_DIR)modules/*/)))
 # -------------------------------------------------------------------------------------------------
 # Container versions
 # -------------------------------------------------------------------------------------------------
-TF_VERSION      = 0.13.7
-TFDOCS_VERSION  = 0.9.1-0.28
+TF_VERSION      = 0.15.5
+TFDOCS_VERSION  = 0.15.0-0.29
 FL_VERSION      = 0.4
 JL_VERSION      = 1.6.0-0.5
 
@@ -32,7 +32,7 @@ LINT_JL_ENABLE = 1
 DELIM_START = <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 DELIM_CLOSE = <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 # What arguments to append to terraform-docs command
-TFDOCS_ARGS = --sort-inputs-by-required --with-aggregate-type-defaults
+TFDOCS_ARGS = --sort-by required
 
 
 # -------------------------------------------------------------------------------------------------
@@ -82,8 +82,7 @@ test: _pull-tf
 				-upgrade=true \
 				-reconfigure \
 				-input=false \
-				-get=true \
-				.; then \
+				-get=true; then \
 			echo "OK"; \
 		else \
 			echo "Failed"; \
@@ -168,7 +167,7 @@ _gen-main:
 		-e DELIM_START='$(DELIM_START)' \
 		-e DELIM_CLOSE='$(DELIM_CLOSE)' \
 		cytopia/terraform-docs:$(TFDOCS_VERSION) \
-		terraform-docs-replace $(TFDOCS_ARGS) md README.md; then \
+		terraform-docs-replace $(TFDOCS_ARGS) markdown README.md; then \
 		echo "OK"; \
 	else \
 		echo "Failed"; \
@@ -187,7 +186,7 @@ _gen-examples:
 			-e DELIM_START='$(DELIM_START)' \
 			-e DELIM_CLOSE='$(DELIM_CLOSE)' \
 			cytopia/terraform-docs:$(TFDOCS_VERSION) \
-			terraform-docs-replace $(TFDOCS_ARGS) md $${DOCKER_PATH}/README.md; then \
+			terraform-docs-replace $(TFDOCS_ARGS) markdown $${DOCKER_PATH}/README.md; then \
 			echo "OK"; \
 		else \
 			echo "Failed"; \
@@ -207,7 +206,7 @@ _gen-modules:
 			-e DELIM_START='$(DELIM_START)' \
 			-e DELIM_CLOSE='$(DELIM_CLOSE)' \
 			cytopia/terraform-docs:$(TFDOCS_VERSION) \
-			terraform-docs-replace $(TFDOCS_ARGS) md $${DOCKER_PATH}/README.md; then \
+			terraform-docs-replace $(TFDOCS_ARGS) markdown $${DOCKER_PATH}/README.md; then \
 			echo "OK"; \
 		else \
 			echo "Failed"; \
