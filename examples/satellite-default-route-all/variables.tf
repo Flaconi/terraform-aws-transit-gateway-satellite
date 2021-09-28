@@ -6,6 +6,7 @@ variable "satellite_create" {
 
 variable "aws_login_profile" {
   description = "Name of the AWS login profile as seen under ~/.aws/config used for assuming cross-account roles"
+  type        = string
 }
 
 variable "aws_account_id_hub" {

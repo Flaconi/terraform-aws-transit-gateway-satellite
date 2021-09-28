@@ -11,10 +11,10 @@ TF_MODULES  = $(sort $(dir $(wildcard $(CURRENT_DIR)modules/*/)))
 # -------------------------------------------------------------------------------------------------
 # Container versions
 # -------------------------------------------------------------------------------------------------
-TF_VERSION      = light
-TFDOCS_VERSION  = 0.8.1-0.18
-FL_VERSION      = 0.2
-JL_VERSION      = latest-0.4
+TF_VERSION      = 0.13.7
+TFDOCS_VERSION  = 0.9.1-0.28
+FL_VERSION      = 0.4
+JL_VERSION      = 1.6.0-0.5
 
 
 # -------------------------------------------------------------------------------------------------
@@ -79,12 +79,9 @@ test: _pull-tf
 		echo "------------------------------------------------------------"; \
 		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
 			init \
-				-verify-plugins=true \
-				-lock=false \
 				-upgrade=true \
 				-reconfigure \
 				-input=false \
-				-get-plugins=true \
 				-get=true \
 				.; then \
 			echo "OK"; \
@@ -171,7 +168,7 @@ _gen-main:
 		-e DELIM_START='$(DELIM_START)' \
 		-e DELIM_CLOSE='$(DELIM_CLOSE)' \
 		cytopia/terraform-docs:$(TFDOCS_VERSION) \
-		terraform-docs-replace-012 $(TFDOCS_ARGS) md README.md; then \
+		terraform-docs-replace $(TFDOCS_ARGS) md README.md; then \
 		echo "OK"; \
 	else \
 		echo "Failed"; \
@@ -190,7 +187,7 @@ _gen-examples:
 			-e DELIM_START='$(DELIM_START)' \
 			-e DELIM_CLOSE='$(DELIM_CLOSE)' \
 			cytopia/terraform-docs:$(TFDOCS_VERSION) \
-			terraform-docs-replace-012 $(TFDOCS_ARGS) md $${DOCKER_PATH}/README.md; then \
+			terraform-docs-replace $(TFDOCS_ARGS) md $${DOCKER_PATH}/README.md; then \
 			echo "OK"; \
 		else \
 			echo "Failed"; \
@@ -210,7 +207,7 @@ _gen-modules:
 			-e DELIM_START='$(DELIM_START)' \
 			-e DELIM_CLOSE='$(DELIM_CLOSE)' \
 			cytopia/terraform-docs:$(TFDOCS_VERSION) \
-			terraform-docs-replace-012 $(TFDOCS_ARGS) md $${DOCKER_PATH}/README.md; then \
+			terraform-docs-replace $(TFDOCS_ARGS) md $${DOCKER_PATH}/README.md; then \
 			echo "OK"; \
 		else \
 			echo "Failed"; \

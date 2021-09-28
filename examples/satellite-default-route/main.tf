@@ -8,7 +8,6 @@ module "tgw-satellite-default-route" {
     aws.hub       = aws.hub
   }
 
-  aws_login_profile = var.aws_login_profile
   satellite_create  = var.satellite_create
 
   aws_account_id_hub       = var.aws_account_id_hub
