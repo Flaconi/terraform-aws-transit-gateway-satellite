@@ -82,8 +82,7 @@ test: _pull-tf
 				-upgrade=true \
 				-reconfigure \
 				-input=false \
-				-get=true \
-				.; then \
+				-get=true; then \
 			echo "OK"; \
 		else \
 			echo "Failed"; \
