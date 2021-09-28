@@ -8,7 +8,7 @@ module "tgw-satellite-all" {
     aws.hub       = aws.hub
   }
 
-  satellite_create  = var.satellite_create
+  satellite_create = var.satellite_create
 
   aws_account_id_hub       = var.aws_account_id_hub
   aws_account_id_satellite = local.aws_account_id_satellite
