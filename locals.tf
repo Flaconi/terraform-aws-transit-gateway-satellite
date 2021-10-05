@@ -27,4 +27,8 @@ locals {
 
   routes_in_tables = var.route_entire_satellite_vpc ? local.routes_in_tables_all : local.routes_in_tables_private
 
+  subnets_with_rt_associations = toset(flatten([for rt in data.aws_route_table.all : rt.associations[*].subnet_id]))
+
+  private_subnets_with_rt = setintersection(data.aws_subnet_ids.private[0].ids, local.subnets_with_rt_associations)
+
 }

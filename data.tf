@@ -35,17 +35,28 @@ data "aws_subnet_ids" "private" {
   }
 }
 
-data "aws_route_table" "this" {
-  provider = aws.satellite
-  count    = local.create ? length(data.aws_subnet_ids.private[0].ids) : 0
-
-  subnet_id = sort(data.aws_subnet_ids.private[0].ids)[count.index]
-}
-
 data "aws_route_tables" "all" {
   provider = aws.satellite
   count    = local.create ? 1 : 0
   vpc_id   = data.aws_vpc.this[0].id
+}
+
+data "aws_route_table" "all" {
+  provider = aws.satellite
+  for_each = data.aws_route_tables.all[0].ids
+  vpc_id   = data.aws_vpc.this[0].id
+
+  filter {
+    name   = "route-table-id"
+    values = [each.value]
+  }
+}
+
+data "aws_route_table" "this" {
+  provider = aws.satellite
+  count    = local.create ? length(local.private_subnets_with_rt) : 0
+
+  subnet_id = sort(local.private_subnets_with_rt)[count.index]
 }
 
 data "aws_ec2_transit_gateway" "this" {
