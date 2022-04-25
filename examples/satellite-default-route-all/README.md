@@ -25,7 +25,6 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_account_id_hub"></a> [aws\_account\_id\_hub](#input\_aws\_account\_id\_hub) | AWS account number containing the TGW hub | `string` | n/a | yes |
 | <a name="input_aws_account_id_satellite"></a> [aws\_account\_id\_satellite](#input\_aws\_account\_id\_satellite) | List of AWS account numbers representing the satellites of the TGW | `list(string)` | n/a | yes |
-| <a name="input_aws_login_profile"></a> [aws\_login\_profile](#input\_aws\_login\_profile) | Name of the AWS login profile as seen under ~/.aws/config used for assuming cross-account roles | `string` | n/a | yes |
 | <a name="input_role_to_assume_hub"></a> [role\_to\_assume\_hub](#input\_role\_to\_assume\_hub) | IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ROLE-HUB) | `string` | n/a | yes |
 | <a name="input_role_to_assume_satellite"></a> [role\_to\_assume\_satellite](#input\_role\_to\_assume\_satellite) | IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ROLE-SATELLITE) | `string` | n/a | yes |
 | <a name="input_attachment_subnet_filters"></a> [attachment\_subnet\_filters](#input\_attachment\_subnet\_filters) | List of maps selecting the subnet(s) where TGW will be attached | <pre>list(object({<br>    name   = string<br>    values = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "name": "tag:Name",<br>    "values": [<br>      "*private*"<br>    ]<br>  }<br>]</pre> | no |
