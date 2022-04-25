@@ -51,7 +51,7 @@ data "aws_route_tables" "all" {
 
 data "aws_route_table" "all" {
   provider = aws.satellite
-  for_each = data.aws_route_tables.all[0].ids
+  for_each = toset(data.aws_route_tables.all[0].ids)
   vpc_id   = data.aws_vpc.this[0].id
 
   filter {
