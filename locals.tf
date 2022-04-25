@@ -29,6 +29,6 @@ locals {
 
   subnets_with_rt_associations = toset(flatten([for rt in data.aws_route_table.all : rt.associations[*].subnet_id]))
 
-  private_subnets_with_rt = setintersection(data.aws_subnet_ids.private[0].ids, local.subnets_with_rt_associations)
+  private_subnets_with_rt = setintersection(data.aws_subnets.private[0].ids, local.subnets_with_rt_associations)
 
 }

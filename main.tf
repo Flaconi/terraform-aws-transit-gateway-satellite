@@ -1,7 +1,7 @@
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   provider           = aws.satellite
   count              = local.create ? 1 : 0
-  subnet_ids         = data.aws_subnet_ids.this[0].ids
+  subnet_ids         = data.aws_subnets.this[0].ids
   transit_gateway_id = local.transit_gateway_id
   vpc_id             = data.aws_vpc.this[0].id
 
@@ -56,7 +56,7 @@ resource "aws_network_acl" "private" {
   provider   = aws.satellite
   count      = local.create && var.private_subnets_strict_acl_rules ? 1 : 0
   vpc_id     = data.aws_vpc.this[0].id
-  subnet_ids = data.aws_subnet_ids.private[0].ids
+  subnet_ids = data.aws_subnets.private[0].ids
 }
 
 resource "aws_network_acl_rule" "private_default_egress" {
