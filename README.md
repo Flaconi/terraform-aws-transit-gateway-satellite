@@ -24,9 +24,15 @@ Support for VPN tunnels will be added soon.
 
 ### Credentials
 
-The module starts from the assumption that the `aws_login_profile` allows the
+The module starts from the assumption that your default aws profile allows the
 user to assume the necessary IAM roles, as required, to make the necessary
 changes (and in the case of the `satellite` module, cross-account).
+You can use profile of your need if you set `AWS_PROFILE` or `AWS_DEFAULT_PROFILE`, e.g.:
+
+```shell
+export AWS_DEFAULT_PROFILE=login
+```
+
 
 See [this example][4] to first make sure that the credentials you want to use
 allow for cross-account actions.
@@ -80,14 +86,14 @@ this fact.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.hub"></a> [aws.hub](#provider\_aws.hub) | >= 3 |
-| <a name="provider_aws.satellite"></a> [aws.satellite](#provider\_aws.satellite) | >= 3 |
+| <a name="provider_aws.hub"></a> [aws.hub](#provider\_aws.hub) | >= 4 |
+| <a name="provider_aws.satellite"></a> [aws.satellite](#provider\_aws.satellite) | >= 4 |
 
 ## Modules
 
@@ -112,8 +118,8 @@ No modules.
 | [aws_route_table.all](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route_table) | data source |
 | [aws_route_table.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route_table) | data source |
 | [aws_route_tables.all](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route_tables) | data source |
-| [aws_subnet_ids.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) | data source |
-| [aws_subnet_ids.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) | data source |
+| [aws_subnets.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnets) | data source |
+| [aws_subnets.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnets) | data source |
 | [aws_vpc.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
