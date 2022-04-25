@@ -24,9 +24,15 @@ Support for VPN tunnels will be added soon.
 
 ### Credentials
 
-The module starts from the assumption that the `aws_login_profile` allows the
+The module starts from the assumption that your default aws profile allows the
 user to assume the necessary IAM roles, as required, to make the necessary
 changes (and in the case of the `satellite` module, cross-account).
+You can use profile of your need if you set `AWS_PROFILE` or `AWS_DEFAULT_PROFILE`, e.g.:
+
+```shell
+export AWS_DEFAULT_PROFILE=login
+```
+
 
 See [this example][4] to first make sure that the credentials you want to use
 allow for cross-account actions.
