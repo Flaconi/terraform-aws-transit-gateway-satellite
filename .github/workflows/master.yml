@@ -19,7 +19,7 @@ jobs:
 
       - name: "make test"
         run: |
-          make test ARGS="-var role_to_assume_hub=${TF_VAR_role_to_assume} -var aws_account_id_hub=${TF_VAR_aws_account_id_hub} -var role_to_assume_hub=${TF_VAR_role_to_assume} -var aws_account_id_satellite=${TF_VAR_aws_account_id_satellite}"
+          make test ARGS="-var role_to_assume_hub=${TF_VAR_role_to_assume} -var aws_account_id_hub=${TF_VAR_aws_account_id_hub} -var role_to_assume_satellite=${TF_VAR_role_to_assume} -var aws_account_id_satellite=${TF_VAR_aws_account_id_satellite}"
         env:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

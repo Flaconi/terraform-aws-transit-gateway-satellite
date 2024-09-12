@@ -1,5 +1,12 @@
-# The Transit Gateway (hub) has already been created in AWS, as a fixture for
-# this test case due to not being able to use 'depends_on' on Terraform modules
+module "tgw" {
+  source = "github.com/flaconi/terraform-aws-transit-gateway-hub.git?ref=v1.6.0"
+
+  name = var.transit_gateway_hub_name
+
+  aws_account_id_hub       = var.aws_account_id_hub
+  aws_account_id_satellite = [var.aws_account_id_satellite]
+}
+
 module "tgw-satellite-default-route-all" {
   source = "../../"
 
@@ -27,4 +34,6 @@ module "tgw-satellite-default-route-all" {
   route_private_subnets_via_tgw = var.route_private_subnets_via_tgw
 
   private_subnet_filters = var.private_subnet_filters
+
+  depends_on = [module.tgw]
 }

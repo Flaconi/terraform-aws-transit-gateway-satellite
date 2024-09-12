@@ -13,6 +13,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_tgw"></a> [tgw](#module\_tgw) | github.com/flaconi/terraform-aws-transit-gateway-hub.git | v1.6.0 |
 | <a name="module_tgw-satellite"></a> [tgw-satellite](#module\_tgw-satellite) | ../../ | n/a |
 
 ## Resources
