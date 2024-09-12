@@ -27,17 +27,6 @@ variable "aws_account_id_hub" {
   type        = string
 }
 
-variable "role_to_assume_satellite" {
-  description = "IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ROLE-SATELLITE)"
-  type        = string
-  default     = ""
-}
-
-variable "role_to_assume_hub" {
-  description = "IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ROLE-HUB)"
-  type        = string
-}
-
 variable "vpc_name_to_attach" {
   description = "Name of the satellite VPC to be attached to the TGW"
   type        = string
