@@ -103,4 +103,6 @@ data "aws_ram_resource_share" "this" {
 
   name           = var.transit_gateway_hub_name
   resource_owner = "SELF"
+
+  resource_share_status = "ACTIVE"
 }

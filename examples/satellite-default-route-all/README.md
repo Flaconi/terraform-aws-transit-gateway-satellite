@@ -3,7 +3,10 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5 |
 
 ## Providers
 
@@ -13,7 +16,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_tgw-satellite-default-route-all"></a> [tgw-satellite-default-route-all](#module\_tgw-satellite-default-route-all) | ../../ | n/a |
+| <a name="module_tgw"></a> [tgw](#module\_tgw) | github.com/flaconi/terraform-aws-transit-gateway-hub.git | v1.6.0 |
+| <a name="module_tgw-satellite"></a> [tgw-satellite](#module\_tgw-satellite) | ../../ | n/a |
 
 ## Resources
 
@@ -24,7 +28,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_account_id_hub"></a> [aws\_account\_id\_hub](#input\_aws\_account\_id\_hub) | AWS account number containing the TGW hub | `string` | n/a | yes |
-| <a name="input_aws_account_id_satellite"></a> [aws\_account\_id\_satellite](#input\_aws\_account\_id\_satellite) | List of AWS account numbers representing the satellites of the TGW | `list(string)` | n/a | yes |
+| <a name="input_aws_account_id_satellite"></a> [aws\_account\_id\_satellite](#input\_aws\_account\_id\_satellite) | AWS account ID representing the satellites of the TGW | `string` | n/a | yes |
 | <a name="input_role_to_assume_hub"></a> [role\_to\_assume\_hub](#input\_role\_to\_assume\_hub) | IAM role name to assume in the AWS account containing the TGW hub (eg. ASSUME-ROLE-HUB) | `string` | n/a | yes |
 | <a name="input_role_to_assume_satellite"></a> [role\_to\_assume\_satellite](#input\_role\_to\_assume\_satellite) | IAM role name to assume in the AWS account containing the TGW satellite (eg. ASSUME-ROLE-SATELLITE) | `string` | n/a | yes |
 | <a name="input_attachment_subnet_filters"></a> [attachment\_subnet\_filters](#input\_attachment\_subnet\_filters) | List of maps selecting the subnet(s) where TGW will be attached | <pre>list(object({<br>    name   = string<br>    values = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "name": "tag:Name",<br>    "values": [<br>      "*private*"<br>    ]<br>  }<br>]</pre> | no |

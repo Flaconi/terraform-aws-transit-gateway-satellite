@@ -11,10 +11,10 @@ TF_MODULES  = $(sort $(dir $(wildcard $(CURRENT_DIR)modules/*/)))
 # -------------------------------------------------------------------------------------------------
 # Container versions
 # -------------------------------------------------------------------------------------------------
-TF_VERSION      = 0.15.5
-TFDOCS_VERSION  = 0.16.0-0.31
-FL_VERSION      = 0.4
-JL_VERSION      = 1.6.0-0.5
+TF_VERSION      = 1.5.7
+TFDOCS_VERSION  = 0.16.0-0.34
+FL_VERSION      = latest-0.8
+JL_VERSION      = 1.6.0-0.14
 
 
 # -------------------------------------------------------------------------------------------------
@@ -104,7 +104,46 @@ test: _pull-tf
 		fi; \
 		echo; \
 		echo "------------------------------------------------------------"; \
-		echo "# Terraform plan"; \
+		echo "# Terraform plan (1/2)"; \
+		echo "------------------------------------------------------------"; \
+		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+			plan -target 'module.tgw-satellite.data.aws_route_tables.all' \
+				$(ARGS) \
+				-out=tfplan \
+				; then \
+			echo "OK"; \
+		else \
+			echo "Failed"; \
+			docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ || true; \
+			exit 1; \
+		fi; \
+		echo; \
+		echo "------------------------------------------------------------"; \
+		echo "# Terraform apply (1/2)"; \
+		echo "------------------------------------------------------------"; \
+		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+			apply -target 'module.tgw-satellite.data.aws_route_tables.all' \
+				-auto-approve \
+				tfplan \
+				; then \
+			echo "Apply OK"; \
+		else \
+			echo "Apply failed"; \
+			if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
+				destroy \
+					-auto-approve \
+					$(ARGS) \
+					; then \
+				echo "Destroy OK"; \
+				docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" --workdir "$${DOCKER_PATH}" --entrypoint=rm hashicorp/terraform:$(TF_VERSION) -rf .terraform/ terraform.tfstate terraform.tfstate.backup || true; \
+			else \
+				echo "Destroy failed. You should check for dangling resources."; \
+				exit 1; \
+			fi; \
+		fi; \
+		echo; \
+		echo "------------------------------------------------------------"; \
+		echo "# Terraform plan (2/2)"; \
 		echo "------------------------------------------------------------"; \
 		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
 			plan \
@@ -119,7 +158,7 @@ test: _pull-tf
 		fi; \
 		echo; \
 		echo "------------------------------------------------------------"; \
-		echo "# Terraform apply & destroy"; \
+		echo "# Terraform apply (2/2) & destroy"; \
 		echo "------------------------------------------------------------"; \
 		if docker run $$(tty -s && echo "-it" || echo) --rm -v "$(CURRENT_DIR):/t" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --workdir "$${DOCKER_PATH}" hashicorp/terraform:$(TF_VERSION) \
 			apply \
@@ -153,7 +192,6 @@ test: _pull-tf
 			fi; \
 		fi; \
 	)
-
 
 # -------------------------------------------------------------------------------------------------
 # Helper Targets
