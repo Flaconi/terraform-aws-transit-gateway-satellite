@@ -11,7 +11,7 @@ module "tgw" {
   aws_account_id_satellite = [var.aws_account_id_satellite]
 }
 
-module "tgw-satellite-default-route-all" {
+module "tgw-satellite" {
   source = "../../"
 
   providers = {
