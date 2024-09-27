@@ -30,3 +30,5 @@ private_subnet_filters = [
     values = ["eu-central-1a", "eu-central-1b"]
   }
 ]
+
+security_group_referencing_support = "enable"

@@ -6,7 +6,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.69 |
 
 ## Providers
 
@@ -38,6 +38,7 @@ No resources.
 | <a name="input_route_private_subnets_via_tgw"></a> [route\_private\_subnets\_via\_tgw](#input\_route\_private\_subnets\_via\_tgw) | Use TGW attachment as a default route (0.0.0.0/0) for private subnets. Value `satellite_destination_cidr_block`s will be ignored. | `bool` | `false` | no |
 | <a name="input_satellite_create"></a> [satellite\_create](#input\_satellite\_create) | Boolean flag for toggling the handling of satellite resources | `bool` | `false` | no |
 | <a name="input_satellite_destination_cidr_blocks"></a> [satellite\_destination\_cidr\_blocks](#input\_satellite\_destination\_cidr\_blocks) | List of CIDRs to be routed for the satellite | `list(string)` | `[]` | no |
+| <a name="input_security_group_referencing_support"></a> [security\_group\_referencing\_support](#input\_security\_group\_referencing\_support) | Whether Security Group Referencing Support is enabled. | `string` | `"disable"` | no |
 | <a name="input_transit_gateway_hub_name"></a> [transit\_gateway\_hub\_name](#input\_transit\_gateway\_hub\_name) | Name of the Transit Gateway to attach to | `string` | `""` | no |
 | <a name="input_transit_gateway_id"></a> [transit\_gateway\_id](#input\_transit\_gateway\_id) | Identifier of the Transit Gateway | `string` | `""` | no |
 | <a name="input_vpc_name_to_attach"></a> [vpc\_name\_to\_attach](#input\_vpc\_name\_to\_attach) | Name of the satellite VPC to be attached to the TGW | `string` | `""` | no |

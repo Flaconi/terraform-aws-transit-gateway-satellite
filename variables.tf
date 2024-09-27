@@ -114,3 +114,9 @@ variable "transit_gateway_default_route_table_propagation" {
   type        = bool
   default     = true
 }
+
+variable "security_group_referencing_support" {
+  description = "Whether Security Group Referencing Support is enabled."
+  type        = string
+  default     = "disable"
+}

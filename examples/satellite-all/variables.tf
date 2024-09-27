@@ -93,3 +93,9 @@ variable "route_entire_satellite_vpc" {
   type        = bool
   default     = false
 }
+
+variable "security_group_referencing_support" {
+  description = "Whether Security Group Referencing Support is enabled."
+  type        = string
+  default     = "disable"
+}

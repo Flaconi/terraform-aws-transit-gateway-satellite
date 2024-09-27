@@ -39,5 +39,7 @@ module "tgw-satellite" {
 
   private_subnet_filters = var.private_subnet_filters
 
+  security_group_referencing_support = var.security_group_referencing_support
+
   depends_on = [module.tgw]
 }
