@@ -8,6 +8,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   transit_gateway_default_route_table_association = var.transit_gateway_default_route_table_association
   transit_gateway_default_route_table_propagation = var.transit_gateway_default_route_table_propagation
 
+  security_group_referencing_support = var.security_group_referencing_support
+
   # When we create the TGW and the association through RAM in one run, we need
   # this to escape the race condition.
   depends_on = [var.ram_resource_association_id]
